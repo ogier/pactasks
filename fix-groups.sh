@@ -2,11 +2,11 @@
 # Prints packages that are in groups but not on pacman, and vice versa
 # Author: Alex Ogier, adapted from code by Spider.007 / Sjon
 
-TMPDIR=`mktemp -d`
-cd $TMPDIR
-
 FILTER=$(sed '1,/^## FILTER/d' $0 | tr '\n' '|')
 FILTER=${FILTER%|}
+
+TMPDIR=`mktemp -d`
+cd $TMPDIR
 
 pacman -Qg | sort > installed
 cut -d' ' -f1 installed | sort -u | xargs pacman -Sg  | sort > remote
